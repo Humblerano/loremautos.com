@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade-In | Lorem Autos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-bg: #0d0d0d;
+            --secondary-bg: #1a1a1a;
+            --tertiary-bg: #252525;
+            --accent-gold: #d4af37;
+            --accent-gold-light: #e5c158;
+            --accent-gold-dark: #b8960c;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --text-light-gray: #d0d0d0;
+            --border-color: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(13,13,13,0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .page-hero {
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .page-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(13,13,13,0.7), rgba(13,13,13,0.9)), 
+                              url('https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .page-hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 0 2rem;
+            max-width: 900px;
+        }
+
+        .page-label {
+            color: var(--accent-gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .page-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light-gray);
+            font-weight: 300;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 2rem 5%;
+            background: var(--secondary-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .breadcrumb-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .breadcrumb a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-gold);
+        }
+
+        .breadcrumb-separator {
+            color: var(--accent-gold);
+        }
+
+        .breadcrumb-current {
+            color: var(--text-white);
+        }
+
+        /* Content */
+        .content-section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Value Proposition */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 6rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+        }
+
+        .value-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-10px);
+        }
+
+        .value-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(212,175,55,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--accent-gold);
+            font-size: 2.5rem;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .value-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-desc {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Appraisal Form */
+        .appraisal-section {
+            background: var(--secondary-bg);
+            padding: 6rem 5%;
+        }
+
+        .appraisal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .appraisal-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .appraisal-info p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .appraisal-steps {
+            list-style: none;
+        }
+
+        .appraisal-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        .appraisal-form {
+            background: var(--primary-bg);
+            padding: 3rem;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--text-gray);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid var(--accent-gold);
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent-gold);
+        }
+
+        /* Brands */
+        .brands-section {
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .brands-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 3rem auto 0;
+        }
+
+        .brand-item {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s ease;
+        }
+
+        .brand-item:hover {
+            color: var(--accent-gold);
+            transform: scale(1.1);
+        }
+
+        /* Testimonial */
+        .testimonial-section {
+            background: linear-gradient(rgba(13,13,13,0.9), rgba(13,13,13,0.9)), 
+                        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .testimonial-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            opacity: 0.5;
+        }
+
+        .testimonial-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-size: 1.1rem;
+        }
+
+        .author-name {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .author-title {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #050505;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--primary-bg);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .appraisal-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background: var(--primary-bg);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                transition: right 0.4s ease;
+                gap: 2rem;
+                border-left: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1001;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-crown"></i>
+            LOREM<span>AUTOS</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#featured">Cars</a></li>
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="financing.html">Financing</a></li>
+            <li><a href="trade-in.html" style="color: var(--accent-gold);">Trade-In</a></li>
+            <li><a href="consignment.html">Consignment</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-content">
+            <span class="page-label">Maximize Value</span>
+            <h1 class="page-title">Trade-In</h1>
+            <p class="page-subtitle">Receive maximum value for your luxury vehicle</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-content">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
+            <span class="breadcrumb-current">Trade-In</span>
+        </div>
+    </div>
+
+    <!-- Value Proposition -->
+    <section class="content-section">
+        <div class="section-header">
+            <span class="section-label">Advantages</span>
+            <h2 class="section-title">The Lorem Autos Trade-In Experience</h2>
+            <p class="section-subtitle">Why discerning sellers choose Aurum for their vehicle transactions</p>
+        </div>
+
+        <div class="value-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-dollar-sign"></i></div>
+                <h3 class="value-title">Competitive Offers</h3>
+                <p class="value-desc">Our market analysis ensures you receive the maximum value for your vehicle. We consistently beat CarMax and dealer trade-in values by an average of 12%.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-bolt"></i></div>
+                <h3 class="value-title">Immediate Payment</h3>
+                <p class="value-desc">No waiting for checks to clear. We offer same-day wire transfer or certified check upon completion of paperwork and vehicle inspection.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="value-title">Hassle-Free Process</h3>
+                <p class="value-desc">We handle all documentation, lien payoffs, and DMV paperwork. Trade your vehicle in the morning, drive away in your new acquisition by afternoon.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appraisal Section -->
+    <section class="appraisal-section" id="appraisal">
+        <div class="appraisal-container">
+            <div class="appraisal-info">
+                <span class="section-label">Evaluation</span>
+                <h2>Request Your Appraisal</h2>
+                <p>Begin with our complimentary online appraisal. Provide detailed information about your vehicle, and our acquisition specialists will respond within 24 hours with a preliminary valuation range.</p>
+                
+                <ul class="appraisal-steps">
+                    <li>
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Submit Details</h4>
+                            <p>Complete our comprehensive vehicle information form</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Receive Valuation</h4>
+                            <p>Get your preliminary estimate within 24 hours</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Physical Inspection</h4>
+                            <p>Schedule an in-person evaluation at our facility</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Final Offer</h4>
+                            <p>Receive and accept our guaranteed purchase offer</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <form class="appraisal-form" onsubmit="submitAppraisal(event)">
+                <div class="form-header">
+                    <h3>Vehicle Information</h3>
+                    <p>Enter your vehicle details below</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Year</label>
+                        <select required>
+                            <option value="">Select Year</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                            <option>2022</option>
+                            <option>2021</option>
+                            <option>2020</option>
+                            <option>2019</option>
+                            <option>2018</option>
+                            <option>2017</option>
+                            <option>2016</option>
+                            <option>2015</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Make</label>
+                        <select required>
+                            <option value="">Select Make</option>
+                            <option>Rolls-Royce</option>
+                            <option>Bentley</option>
+                            <option>Mercedes-Benz</option>
+                            <option>BMW</option>
+                            <option>Audi</option>
+                            <option>Porsche</option>
+                            <option>Lamborghini</option>
+                            <option>Ferrari</option>
+                            <option>Aston Martin</option>
+                            <option>McLaren</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Model</label>
+                    <input type="text" placeholder="e.g., Phantom, Continental GT" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mileage</label>
+                        <input type="number" placeholder="Current odometer reading" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Condition</label>
+                        <select required>
+                            <option value="">Select Condition</option>
+                            <option>Excellent - Like New</option>
+                            <option>Very Good - Minor Wear</option>
+                            <option>Good - Normal Wear</option>
+                            <option>Fair - Needs Some Work</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>VIN (Optional)</label>
+                    <input type="text" placeholder="Vehicle Identification Number">
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Details</label>
+                    <textarea rows="3" placeholder="Service history, modifications, special features..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Request Appraisal</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Brands -->
+    <section class="brands-section">
+        <div class="section-header">
+            <span class="section-label">Brands We Seek</span>
+            <h2 class="section-title">Luxury & Exotic Vehicles</h2>
+            <p class="section-subtitle">We actively acquire premium automobiles from these manufacturers</p>
+        </div>
+        <div class="brands-grid">
+            <div class="brand-item">Rolls-Royce</div>
+            <div class="brand-item">Bentley</div>
+            <div class="brand-item">Mercedes-Maybach</div>
+            <div class="brand-item">Porsche</div>
+            <div class="brand-item">Lamborghini</div>
+            <div class="brand-item">Ferrari</div>
+            <div class="brand-item">Aston Martin</div>
+            <div class="brand-item">McLaren</div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial-section">
+        <div class="testimonial-content">
+            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+            <p class="testimonial-text">"Lorem Autos offered me $15,000 more than the dealership for my Bentley. The entire process was professional, transparent, and completed in less than 48 hours. I couldn't be more impressed."</p>
+            <div class="testimonial-author">
+                <div class="author-name">Michael R.</div>
+                <div class="author-title">Beverly Hills, CA</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-crown"></i>
+                    LOREM<span>AUTOS</span>
+                </a>
+                <p>Defining luxury automotive retail since 2004. We don't just sell cars—we deliver dreams.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="sales.html">Car Sales</a></li>
+                    <li><a href="financing.html">Financing</a></li>
+                    <li><a href="trade-in.html">Trade-In</a></li>
+                    <li><a href="consignment.html">Consignment</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#featured">Inventory</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Lorem Autos. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Form submission
+        function submitAppraisal(e) {
+            e.preventDefault();
+            const form = e.target;
+            form.innerHTML = `
+                <div style="text-align: center; padding: 3rem;">
+                    <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent-gold); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 1rem;">Appraisal Request Received</h3>
+                    <p style="color: var(--text-gray); margin-bottom: 2rem;">Our acquisition team will contact you within 24 hours with your preliminary valuation.</p>
+                    <button onclick="location.reload()" style="padding: 1rem 2rem; background: var(--accent-gold); border: none; color: var(--primary-bg); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">Submit Another</button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
